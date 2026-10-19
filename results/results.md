@@ -5,11 +5,11 @@ Latency per inference in ms, MobileNetV2 224x224 int8, batch 1, 200 steady-state
 
 | Config | Median (ms) | First run (ms) | benchmark_model avg (ms) | benchmark_model first (ms) | runs |
 |---|---|---|---|---|---|
-| CPU 1 thread, XNNPACK (default) | 40.77 | 46.77 | 40.41 | 49.91 | 200 |
-| CPU 2 threads, XNNPACK (default) | 22.95 | 28.69 | 22.85 | 28.74 | 200 |
-| CPU 1 thread, XNNPACK off | 68.01 | 74.62 | 67.70 | 79.03 | 200 |
-| CPU 2 threads, XNNPACK off | 49.10 | 55.52 | 48.99 | 55.34 | 200 |
-| NPU (Ethos-U65, Vela model) | 3.48 | 3.70 | 3.48 | 3.58 | 200 |
+| CPU 1 thread, XNNPACK (default) | 40.59 | 46.52 | 40.66 | 46.58 | 200 |
+| CPU 2 threads, XNNPACK (default) | 22.99 | 29.07 | 22.73 | 28.66 | 200 |
+| CPU 1 thread, XNNPACK off | 68.21 | 74.97 | 67.59 | 74.43 | 200 |
+| CPU 2 threads, XNNPACK off | 49.13 | 55.44 | 48.94 | 55.25 | 200 |
+| NPU (Ethos-U65, Vela model) | 3.47 | 3.61 | 3.48 | 3.55 | 200 |
 
 Speedup of the NPU median over each CPU median:
 
@@ -17,15 +17,15 @@ Speedup of the NPU median over each CPU median:
 |---|---|
 | vs CPU 1 thread, XNNPACK | 11.7x |
 | vs CPU 2 threads, XNNPACK | 6.6x |
-| vs CPU 1 thread, XNNPACK off | 19.5x |
+| vs CPU 1 thread, XNNPACK off | 19.6x |
 | vs CPU 2 threads, XNNPACK off | 14.1x |
 
 ## Model size
 
-- int8 TFLite before Vela: 3991688 bytes
-- after Vela (NPU model): 3607424 bytes
+- int8 TFLite before Vela: 3991688 bytes (sha256 7d2db8637b97aca727ddb80f45f60874d8cfe6753b2be5d5b09b6bdb31f6b81e)
+- after Vela (NPU model): 3607424 bytes (sha256 f9ba35b3a435d0e1cb14ce8d1daddc4f54294af88ee37795eb07b3188324cf50)
 
-## Vela operator placement (results/vela_summary.txt)
+## Vela operator placement (results/board/vela_summary.txt)
 
 - NPU operators: 96 (100.0%), CPU operators: 0 (0.0%)
 - Vela's own cycle-model estimate: 4.24 ms per inference (an estimate, not a measurement)
@@ -34,8 +34,10 @@ Speedup of the NPU median over each CPU median:
 
 - top-1 identical on 49 of 50 images
 - differences: n02979186_40.JPEG: cpu=cassette player npu=tape player
+- board top-1 vs ground truth (1000-way argmax): CPU 0.72, NPU 0.70
 
 ## Board state during the run
 
 - cpufreq sysfs not exposed on this BSP, CPU clock/governor not recorded
 - tflite_runtime 2.16.2, vela 3.12.0
+- remoteproc / dmesg after the NPU runs: /sys/class/remoteproc/remoteproc0 imx-rproc running; [    0.000000] OF: reserved mem: initialized node ethosu_region@A8000000, compatible id shared-dma-pool; [    0.000000] OF: reserved mem: 0x00000000a8000000..0x00000000afffffff (131072 KiB) map reusable ethosu_region@A8000000; [    1.360701] ethosu ethosu: assigned reserved memory node ethosu_region@A8000000; [  618.747824] remoteproc remoteproc0: Booting fw image ethosu_firmware, size 242844; [  619.267281] virtio_rpmsg_bus virtio1: creating channel rpmsg-ethosu-channel addr 0x1e; [  624.902593] ethosu ethosu: can't change firmware or remote processor is running; [  676.029206] ethosu ethosu: can't change firmware or remote processor is running; [  720.897610] ethosu ethosu: can't change firmware or remote processor is running; [  727.113575] ethosu ethosu: can't change firmware or remote processor is running; [ 1124.747935] ethosu ethosu: can't change firmware or remote processor is running; [ 1169.552375] ethosu ethosu: can't change firmware or remote processor is running; [ 1175.745386] ethosu ethosu: can't change firmware or remote processor is running

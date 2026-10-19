@@ -111,7 +111,7 @@ def main() -> int:
         scores = interp.get_tensor(out["index"])[0].astype(np.int32)
         top = np.argsort(scores)[::-1][:TOP_K]
         names = ", ".join(f"{labels[i]}({scores[i]})" for i in top)
-        print(f"{path.name}\t{ms:.3f} ms\ttop1={labels[top[0]]}\ttop5={names}")
+        print(f"{path.name}\t{ms:.3f} ms\ttop1={labels[top[0]]}\ttop1_idx={top[0]}\ttop5={names}")
     return 0
 
 

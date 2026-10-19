@@ -58,8 +58,11 @@ Plain-language log of what was done, why, and the tradeoffs.
   `benchmark_model` at `/usr/bin/tensorflow-lite-2.16.2/examples/benchmark_model`, `tflite_runtime` 2.16.2,
   device node `/dev/ethosu0`. So Vela runs on the board and matches its NPU stack; no pip pin needed on the laptop.
 - **Converter vs runtime:** laptop TF 2.15.1 is older than the board runtime 2.16.2, which is the safe direction.
-- **remoteproc0 (M33) is `offline`:** noted, not assumed relevant. Whether the NPU needs it is settled only by
-  the NPU benchmark actually running (see results).
+- **remoteproc0 (M33) was `offline` at probe time.** Later observation, saved in `results/board/remoteproc_state.txt`:
+  after the NPU runs it is `running`, and dmesg shows `Booting fw image ethosu_firmware` plus an `rpmsg-ethosu-channel`.
+  So the Ethos-U driver loads the Ethos-U firmware onto the M33 on first NPU use and the NPU path depends on it.
+  (An earlier note of mine in this session said the NPU ran with the M33 offline; that was wrong, I had only
+  seen the state before the first NPU use.)
 - **Network:** both Ethernet ports had no carrier at probe time (no cable), so SSH is blocked until a cable is
   plugged in.
 
@@ -81,10 +84,11 @@ Plain-language log of what was done, why, and the tradeoffs.
   as normal TFLite ops that run on the CPU. It also schedules tensors in memory and estimates cycles.
 - **Version match:** run on the board so the Vela version (3.12.0) is the one shipped with the board's NPU
   driver stack; the command stream format must match the driver/firmware.
-- **Config choice:** `--accelerator-config ethos-u65-256` (the i.MX 93 NPU has 256 MACs), default system config
-  and memory mode as in NXP's guide. The i.MX 93 has no dedicated NPU SRAM, so the "internal-default" memory
-  mode is what Vela reports (375 KiB SRAM scratch, 3877 KiB DRAM). Different system configs change Vela's
-  estimate and scheduling, not correctness; not explored.
+- **Config choice:** `--accelerator-config ethos-u65-256` with Vela's defaults. I did not open NXP's i.MX Machine
+  Learning User's Guide in this session, so I do not cite it; what is observed is that this configuration compiled
+  and ran on the board. Vela reported "internal-default" for system config and memory mode only because none was
+  passed. It then used 375 KiB of SRAM scratch and 3877 KiB of DRAM per its own report. Other `--system-config` /
+  `--memory-mode` settings change Vela's scheduling and estimate; not explored.
 - **Why some ops can fall back to the CPU:** the NPU supports a fixed set of int8 ops with shape/stride/
   padding limits. Anything float, unsupported, or beyond a limit is left to the CPU, and each CPU/NPU switch
   costs a delegate partition. For this model Vela reports 0 CPU operators, so there was no fallback to analyze;
@@ -94,13 +98,25 @@ Plain-language log of what was done, why, and the tradeoffs.
 
 - **Two measurement paths:** TFLite `benchmark_model` (the standard tool) and `board/bench.py` (records every run).
   `benchmark_model` gives no median, so reporting its average as a median would be wrong; the median comes from
-  the saved CSVs. They agree within about 1 percent on every config, which is a cross-check on both.
+  the saved CSVs. Median and benchmark_model average agree within about 1 percent on every config, which is a cross-check on both.
 - **CPU baseline:** `benchmark_model` and tflite_runtime apply XNNPACK implicitly, so the "obvious" CPU number is
   XNNPACK. I report XNNPACK on as the baseline and XNNPACK off for reference, because a quoted speedup against
-  the slower reference kernels would overstate the NPU's advantage (19.5x vs 11.7x at one thread).
+  the slower reference kernels would overstate the NPU's advantage (19.6x vs 11.7x at one thread; 6.6x vs the two-thread XNNPACK baseline).
 - **Warm-up:** first inference is separated from steady state; 10 extra warm-up runs are discarded.
 - **Random input for latency:** inference time does not depend on values; accuracy is checked separately.
 - **Agreement check:** 49 of 50 top-1 labels match between CPU and NPU; the one mismatch is a near-tie, see README.
 - **Not measured:** power, temperature, CPU clock (no cpufreq sysfs), run-to-run variance across separate boots.
 - **Shared preprocessing:** `infer.py` copies `quantize.py`'s load/resize/crop code. Duplicated on purpose so
   the board has no dependency on TensorFlow; a divergence would hurt accuracy silently, so they are kept identical.
+
+## 7. Provenance and reruns
+
+- The first board run was discarded. The final results are from one clean rerun using the committed, formatted
+  scripts, which also records sha256 of both models, the remoteproc state, and passes the delegate path found by the
+  script to `infer.py`. `results/board/env.txt` holds the hashes and exact commands.
+- `model/*_list.txt` hold paths relative to the dataset directory so another machine can reproduce the selection.
+- Board-side accuracy (0.72 CPU, 0.70 NPU) is scored from `top1_idx` in the infer logs against the wnid folder in
+  `model/sample_list.txt`. CPU 0.72 equals the laptop int8 figure, which supports identical preprocessing despite
+  different Pillow versions (laptop 12.3, board 10.3).
+- Credentials: the Wi-Fi passphrase was typed on the board over serial and lives only in
+  `/var/lib/connman/home.config` (mode 600). The board shell history was cleared. Nothing in this repo.

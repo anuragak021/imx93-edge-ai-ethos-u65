@@ -9,4 +9,4 @@ INFO: Ethosu delegate: pmu_event1 set to 0.
 INFO: Ethosu delegate: pmu_event2 set to 0.
 INFO: Ethosu delegate: pmu_event3 set to 0.
 INFO: EthosuDelegate: 1 nodes delegated out of 1 nodes with 1 partitions.
-device=npu threads=1 no_xnnpack=False runs=200 first_ms=3.699 median_ms=3.479 mean_ms=3.480 p95_ms=3.496 min_ms=3.466 max_ms=3.534
+device=npu threads=1 no_xnnpack=False runs=200 first_ms=3.610 median_ms=3.474 mean_ms=3.474 p95_ms=3.479 min_ms=3.464 max_ms=3.495

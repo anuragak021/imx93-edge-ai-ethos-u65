@@ -12,13 +12,13 @@ INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
 INFO: XNNPACK delegate created.
 INFO: Explicitly applied XNNPACK delegate, and the model graph will be partially executed by the delegate w/ 1 delegate kernels.
 INFO: The input model file size (MB): 3.99169
-INFO: Initialized session in 36.059ms.
+INFO: Initialized session in 35.994ms.
 INFO: Running benchmark for at least 10 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
-INFO: count=22 first=28738 curr=22703 min=22680 max=28738 avg=23124 std=1229
+INFO: count=22 first=28655 curr=22903 min=22516 max=28655 avg=23022.1 std=1232
 
 INFO: Running benchmark for at least 200 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
-INFO: count=200 first=22763 curr=22649 min=22595 max=26750 avg=22851.3 std=310
+INFO: count=200 first=23380 curr=22925 min=22425 max=23380 avg=22732.5 std=127
 
-INFO: Inference timings in us: Init: 36059, First inference: 28738, Warmup (avg): 23124, Inference (avg): 22851.3
+INFO: Inference timings in us: Init: 35994, First inference: 28655, Warmup (avg): 23022.1, Inference (avg): 22732.5
 INFO: Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
-INFO: Memory footprint delta from the start of the tool (MB): init=13.0742 overall=18.6992
+INFO: Memory footprint delta from the start of the tool (MB): init=13.0781 overall=17.4531

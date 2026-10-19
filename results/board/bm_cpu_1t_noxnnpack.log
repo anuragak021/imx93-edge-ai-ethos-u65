@@ -9,13 +9,13 @@ INFO: #threads used for CPU inference: [1]
 INFO: Use xnnpack: [0]
 INFO: Loaded model mobilenet_v2_int8.tflite
 INFO: The input model file size (MB): 3.99169
-INFO: Initialized session in 5.477ms.
+INFO: Initialized session in 5.324ms.
 INFO: Running benchmark for at least 10 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
-INFO: count=10 first=79030 curr=67613 min=67606 max=79030 avg=68922.1 std=3379
+INFO: count=10 first=74429 curr=67497 min=67478 max=74429 avg=68344.9 std=2045
 
 INFO: Running benchmark for at least 200 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
-INFO: count=200 first=67710 curr=67744 min=67453 max=69239 avg=67703.2 std=209
+INFO: count=200 first=67565 curr=67565 min=67429 max=67912 avg=67593.4 std=78
 
-INFO: Inference timings in us: Init: 5477, First inference: 79030, Warmup (avg): 68922.1, Inference (avg): 67703.2
+INFO: Inference timings in us: Init: 5324, First inference: 74429, Warmup (avg): 68344.9, Inference (avg): 67593.4
 INFO: Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
-INFO: Memory footprint delta from the start of the tool (MB): init=4.375 overall=10.8086
+INFO: Memory footprint delta from the start of the tool (MB): init=4.375 overall=10.8047

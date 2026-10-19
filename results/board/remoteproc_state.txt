@@ -1,0 +1,13 @@
+/sys/class/remoteproc/remoteproc0 imx-rproc running
+[    0.000000] OF: reserved mem: initialized node ethosu_region@A8000000, compatible id shared-dma-pool
+[    0.000000] OF: reserved mem: 0x00000000a8000000..0x00000000afffffff (131072 KiB) map reusable ethosu_region@A8000000
+[    1.360701] ethosu ethosu: assigned reserved memory node ethosu_region@A8000000
+[  618.747824] remoteproc remoteproc0: Booting fw image ethosu_firmware, size 242844
+[  619.267281] virtio_rpmsg_bus virtio1: creating channel rpmsg-ethosu-channel addr 0x1e
+[  624.902593] ethosu ethosu: can't change firmware or remote processor is running
+[  676.029206] ethosu ethosu: can't change firmware or remote processor is running
+[  720.897610] ethosu ethosu: can't change firmware or remote processor is running
+[  727.113575] ethosu ethosu: can't change firmware or remote processor is running
+[ 1124.747935] ethosu ethosu: can't change firmware or remote processor is running
+[ 1169.552375] ethosu ethosu: can't change firmware or remote processor is running
+[ 1175.745386] ethosu ethosu: can't change firmware or remote processor is running

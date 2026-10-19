@@ -39,6 +39,3 @@ Total cycles                                  4243380 cycles/batch
 
 Batch Inference time                 4.24 ms,  235.66 inferences/s (batch size 1)
 
-total 3528
--rw-r--r-- 1 root root    1672 Sep  9 18:35 mobilenet_v2_int8_summary_internal-default.csv
--rw-r--r-- 1 root root 3607424 Sep  9 18:35 mobilenet_v2_int8_vela.tflite

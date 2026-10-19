@@ -101,8 +101,10 @@ def main() -> int:
     rng = random.Random(SEED)
     calib = pick_images(args.dataset, "train", args.calib_per_class, rng)
     samples = pick_images(args.dataset, "val", args.sample_per_class, rng)
-    Path("model/calib_list.txt").write_text("\n".join(map(str, calib)) + "\n")
-    Path("model/sample_list.txt").write_text("\n".join(map(str, samples)) + "\n")
+    Path("model/calib_list.txt").write_text("\n".join(str(p.relative_to(args.dataset)) for p in calib) + "\n")
+    Path("model/sample_list.txt").write_text(
+        "\n".join(str(p.relative_to(args.dataset)) for p in samples) + "\n"
+    )
 
     keras_model = tf.keras.applications.MobileNetV2(
         weights="imagenet", input_shape=(INPUT_SIZE, INPUT_SIZE, 3)

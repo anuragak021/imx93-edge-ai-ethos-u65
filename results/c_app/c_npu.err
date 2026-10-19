@@ -1,0 +1,11 @@
+INFO: Ethosu delegate: device_name set to /dev/ethosu0.
+INFO: Ethosu delegate: cache_file_path set to .
+INFO: Ethosu delegate: timeout set to 60000000000.
+INFO: Ethosu delegate: enable_cycle_counter set to 0.
+INFO: Ethosu delegate: enable_profiling set to 0.
+INFO: Ethosu delegate: profiling_buffer_size set to 2048.
+INFO: Ethosu delegate: pmu_event0 set to 0.
+INFO: Ethosu delegate: pmu_event1 set to 0.
+INFO: Ethosu delegate: pmu_event2 set to 0.
+INFO: Ethosu delegate: pmu_event3 set to 0.
+INFO: EthosuDelegate: 1 nodes delegated out of 1 nodes with 1 partitions.

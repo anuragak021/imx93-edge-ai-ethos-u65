@@ -85,7 +85,37 @@ Wi-Fi: the NXP driver was not loaded on this image, so I ran `modprobe moal mod_
 gave connman the network through `/var/lib/connman/*.config`. I did not make the module load persistent or test a reboot.
 No credentials are stored in this repo.
 
+## C inference app (stretch goal)
+
+`stretch_c_app/` is a C11 port of `infer.py` using the TFLite C API, same flags (`--device cpu|npu`, `--model`,
+`--images`, `--threads`, `--delegate`, plus `--xnnpack` for the CPU path) and the same output format. The NPU path loads the
+Ethos-U delegate through `TfLiteExternalDelegateCreate`. Pure logic (Pillow-compatible resize and crop, quantization,
+top-k, label parsing) is separate from the TFLite glue and has host unit tests (`ctest`, 3 suites). Everything builds with
+`-Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wdouble-promotion -Werror`; cppcheck is clean; clang-tidy findings
+are listed in NOTES.md section 8. The resize is checked against Pillow output: identical on four synthetic images and
+off by at most 1 on the fifth (`stretch_c_app/tests/test_imgproc.c`).
+
+Measured on the board (`results/c_app_results.md`, generated from `results/c_app/*.log`; median per-image `invoke()` over
+50 images, so fewer samples than the table above):
+
+| Config | Median (ms) | top-1 vs ground truth |
+|---|---|---|
+| NPU | 3.52 | 0.72 |
+| CPU 1 thread, XNNPACK | 40.90 | 0.72 |
+| CPU 2 threads, XNNPACK | 22.64 | 0.72 |
+| CPU 1 thread, no XNNPACK | 67.83 | 0.72 |
+| CPU 2 threads, no XNNPACK | 49.05 | 0.72 |
+
+- The C CPU path does not use XNNPACK by default (its 1-thread latency equals the XNNPACK-off figure); the `--xnnpack`
+  flag adds the delegate explicitly. Compare the NPU against the XNNPACK rows.
+- The C and Python apps are **not** bit-identical: top-1 matches on 48 of 50 images on the NPU and 47 of 50 on the CPU
+  with XNNPACK. The C app decodes JPEGs with stb_image and the Python app with Pillow (libjpeg), and the two decoders
+  produce slightly different pixels. That is the likely cause but I did not isolate it. One of the differing images
+  (`n02102040_5802.JPEG`) changes class entirely (skunk vs Tibetan mastiff), so the models are sensitive on it.
+- Build and run on the board (it has gcc and cmake): `tools/fetch_c_deps.py` downloads the TF 2.16.2 C headers and
+  stb_image.h (pinned, hash-checked; the board has no headers), then `sh stretch_c_app/run_c_app.sh results_c` builds,
+  runs the unit tests and every configuration. The exact commands are in `results/c_app/env.txt`.
+
 ## Roadmap
 
-Planned: C inference app via the TFLite C API, RPMsg A55 to M33 demo, power measurement, custom Yocto image.
-Not done yet.
+Not done yet: RPMsg A55 to M33 demo, power measurement, custom Yocto image and the later items.

@@ -1,0 +1,19 @@
+[  7%] Building C object CMakeFiles/core.dir/src/imgproc.c.o
+[ 15%] Building C object CMakeFiles/core.dir/src/quant.c.o
+[ 23%] Building C object CMakeFiles/core.dir/src/labels.c.o
+[ 30%] Linking C static library libcore.a
+[ 30%] Built target core
+[ 38%] Building C object CMakeFiles/test_imgproc.dir/tests/test_imgproc.c.o
+[ 46%] Linking C executable test_imgproc
+[ 46%] Built target test_imgproc
+[ 53%] Building C object CMakeFiles/test_quant.dir/tests/test_quant.c.o
+[ 61%] Linking C executable test_quant
+[ 61%] Built target test_quant
+[ 69%] Building C object CMakeFiles/test_labels.dir/tests/test_labels.c.o
+[ 76%] Linking C executable test_labels
+[ 76%] Built target test_labels
+[ 84%] Building C object CMakeFiles/stb_impl.dir/src/stb_impl.c.o
+[ 84%] Built target stb_impl
+[ 92%] Building C object CMakeFiles/imx93_infer.dir/src/main.c.o
+[100%] Linking C executable imx93_infer
+[100%] Built target imx93_infer

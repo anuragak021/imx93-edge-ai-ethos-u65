@@ -138,4 +138,4 @@ the M33 console output. The M33 can run only one firmware at a time, so this dem
 
 ## Roadmap
 
-Not done yet: power measurement (needs a USB power meter), custom Yocto image and the later items.
+Not done yet: power measurement (no USB power meter available), custom Yocto image and the later items.

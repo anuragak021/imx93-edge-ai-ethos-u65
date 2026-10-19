@@ -1,0 +1,4 @@
+# Laptop-side quantization. Versions pinned after install (see pip freeze step).
+tensorflow-cpu==2.15.1
+numpy<2
+pillow

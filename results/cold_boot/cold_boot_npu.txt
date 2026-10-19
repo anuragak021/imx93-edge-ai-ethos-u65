@@ -1,0 +1,12 @@
+uptime_s=1184.12
+remoteproc_before=offline
+# warmup_ms=3.647 device=npu
+ILSVRC2012_val_00017370.JPEG	3.651 ms	top1=English springer	top1_idx=217	top5=English spri
+ILSVRC2012_val_00022792.JPEG	3.608 ms	top1=golf ball	top1_idx=574	top5=golf ball(106), bas
+ILSVRC2012_val_00023242.JPEG	3.594 ms	top1=Brittany spaniel	top1_idx=215	top5=Brittany spa
+remoteproc_after=running
+device=npu threads=1 no_xnnpack=False runs=50 first_ms=3.623 median_ms=3.483 mean_ms=3.491 p95_ms=3.562 min_ms=3.465 max_ms=3.574
+[    0.307883] imx rpmsg driver is registered.
+[    1.843847] remoteproc remoteproc0: imx-rproc is available
+[ 1185.518384] remoteproc remoteproc0: powering up imx-rproc
+[ 1185.519521] remoteproc remoteproc0: Booting fw image ethosu_firmware, size 242844

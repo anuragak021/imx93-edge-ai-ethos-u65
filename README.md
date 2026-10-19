@@ -56,8 +56,10 @@ BSP the Ethos-U driver starts the M33 with the Ethos-U firmware the first time t
 - The CPU baseline is the default TFLite build with XNNPACK; XNNPACK-off rows are for reference.
 - Not recorded: CPU clock and governor (this BSP exposes no cpufreq sysfs), temperature, power. One board, one boot,
   one run of the suite; variation across boots was not measured.
-- The very first NPU use after boot also starts the M33 firmware, so a cold-boot first inference may be slower
-  than the 3.61 ms "first run" here (the NPU had already been used earlier in this boot). Not measured.
+- Cold boot (`results/cold_boot/cold_boot_npu.txt`, board freshly booted, M33 `offline`): loading the delegate
+  powered up the M33 (`Booting fw image ethosu_firmware` in dmesg), and the first NPU inference then took 3.647 ms,
+  the same as steady state. The M33 start-up cost therefore falls in delegate/interpreter setup; that setup time
+  was not timed on the cold boot.
 
 ## Reproduce
 

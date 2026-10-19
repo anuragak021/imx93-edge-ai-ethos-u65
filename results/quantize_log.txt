@@ -1,0 +1,5 @@
+tensorflow 2.15.1
+model bytes (int8 tflite): 3991688
+calibration images: 100  held-out images: 50
+float32 top-1 on held-out (1000-way argmax): 0.780
+int8    top-1 on held-out (1000-way argmax): 0.720

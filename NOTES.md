@@ -23,3 +23,26 @@ Plain-language log of what was done, why, and the tradeoffs.
 5. `board/run_benchmarks.sh`: CPU 1 thread, CPU 2 threads, NPU; raw logs to `results/`.
 6. `board/infer.py` classifier with `--device cpu|npu`; compare top 1 between devices.
 7. README table filled only from `results/` logs; NOTES.md concept sections; advisor review; done.
+
+## 2. Quantization (`model/quantize.py`)
+
+- **What int8 quantization does:** each float32 weight/activation `x` is stored as an 8-bit integer
+  `q` with `x ~ scale * (q - zero_point)`. The model is about 4x smaller and integer math is much
+  cheaper than float on the CPU, and the Ethos U65 can *only* run int8 (or int16 activations).
+- **Why a representative dataset:** weights are known, but activation ranges are not. The converter
+  runs the calibration images through the float model to record min/max per tensor, then picks scales
+  from them. Random or unrepresentative data gives wrong ranges, so values clip or lose precision and
+  accuracy drops. We use 100 real ImageNet-class images (Imagenette train split, fixed seed 93).
+- **Full int8, int8 in/out:** `TFLITE_BUILTINS_INT8` plus `inference_input_type = inference_output_type = int8`.
+  If any float op or float edge were left, Vela would have to leave it on the CPU. The input scale and
+  zero point are read from the model at run time, never hardcoded.
+- **Held-out set:** calibration images (train split) and the sample set (val split) are disjoint, so the
+  accuracy check is not measured on calibration data.
+- **Dataset:** Imagenette is a 10-class ImageNet subset, so its labels map to ImageNet-1k indices and
+  the stock MobileNetV2 can be scored without retraining. The check is 1000-way argmax compared with the
+  true class.
+- **Tradeoff:** post-training quantization is fast but loses some accuracy (see `results/quantize_log.txt`);
+  quantization-aware training would recover it but needs training. The held-out set is only 50 images,
+  so the float vs int8 accuracy gap is indicative, not statistically solid.
+- **Lesson:** the first dataset download died silently (backgrounded curl, hidden errors), leaving a
+  truncated file; a naive resume then appended wrong data. Always verify size/checksum after a download.

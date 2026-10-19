@@ -139,3 +139,11 @@ the M33 console output. The M33 can run only one firmware at a time, so this dem
 ## Roadmap
 
 Not done yet: power measurement (no USB power meter available), custom Yocto image and the later items.
+
+## License
+
+MIT, see `LICENSE`. Copyright (c) 2026 Anurag Kumar (anuragak021).
+
+Third-party material is not part of this repository and keeps its own license: the TensorFlow Lite C API headers and
+`stb_image.h` are downloaded by `tools/fetch_c_deps.py`, and the NXP BSP software on the board (Vela, the Ethos-U
+delegate and firmware, the prebuilt M33 demo firmware) belongs to NXP and Arm under their own terms.

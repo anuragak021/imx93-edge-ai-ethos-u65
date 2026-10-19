@@ -116,6 +116,22 @@ Measured on the board (`results/c_app_results.md`, generated from `results/c_app
   stb_image.h (pinned, hash-checked; the board has no headers), then `sh stretch_c_app/run_c_app.sh results_c` builds,
   runs the unit tests and every configuration. The exact commands are in `results/c_app/env.txt`.
 
+## A55 to M33 RPMsg ping-pong (stretch goal)
+
+`board/rpmsg_pingpong.sh` swaps the firmware on the Cortex-M33 (`remoteproc0`) from `ethosu_firmware` to NXP's prebuilt
+`imx93-11x11-evk_m33_TCM_rpmsg_lite_pingpong_rtos_linux_remote.elf` (shipped in the BSP's `/lib/firmware`), loads the Linux
+`imx_rpmsg_pingpong` module, lets the demo run, then restores the Ethos-U firmware. Result (`results/rpmsg/`):
+
+- dmesg shows the M33 booting the demo firmware, the channel `rpmsg-openamp-demo-channel` appearing, and Linux receiving
+  51 messages, the odd numbers 1 to 101 in order, followed by the demo's own "goodbye!".
+- After the script, `remoteproc0` was back on `ethosu_firmware`, `running`, and `infer.py --device npu` ran again at 3.65 ms
+  (checked by hand; that run is not saved as a log).
+
+What this does and does not show: the A55 and M33 can exchange RPMsg messages on this FRDM board. The M33 code is **NXP's
+prebuilt demo, not code I wrote**, and it was built for the 11x11 EVK, not the FRDM. It worked, presumably because RPMsg
+uses only SoC-level resources (messaging unit and shared memory), but I did not check that explanation, and I did not look at
+the M33 console output. The M33 can run only one firmware at a time, so this demo and the NPU cannot be used simultaneously.
+
 ## Roadmap
 
-Not done yet: RPMsg A55 to M33 demo, power measurement, custom Yocto image and the later items.
+Not done yet: power measurement (needs a USB power meter), custom Yocto image and the later items.

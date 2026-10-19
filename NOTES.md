@@ -156,3 +156,22 @@ Plain-language log of what was done, why, and the tradeoffs.
   cannot represent (rewritten with a power-of-two scale); a scripted edit inserted the `--xnnpack` case so that
   `--delegate` fell through into it, caught only because I reread the block; and the first board run of the script
   stopped at the XNNPACK flag because the case label had never been added. The saved logs come from the run after the fix.
+
+## 9. RPMsg ping-pong (A55 to M33)
+
+- **What RPMsg is here:** Linux (A55) and the M33 share memory (vrings and buffers in reserved DDR regions from the
+  device tree: `vdev0vring0@a4000000` etc.) and signal each other with the messaging unit hardware. `remoteproc` loads
+  the M33 firmware and creates the `virtio_rpmsg_bus`; the firmware announces named channels; a Linux driver
+  bound to a channel name talks to it. The same mechanism carries the NPU's `rpmsg-ethosu-channel`.
+- **Why the NPU and the demo conflict:** the i.MX 93 Ethos-U driver runs its control firmware on the M33, so the M33
+  can run either `ethosu_firmware` or a demo, not both. The script stops the core, changes
+  `/sys/class/remoteproc/remoteproc0/firmware`, starts it, and a `trap` restores `ethosu_firmware` on any exit.
+  Nothing persistent changes; a reboot also restores the default.
+- **Why a prebuilt demo, not my own firmware:** building M33 firmware needs NXP's MCUXpresso SDK (login download) and an
+  Arm toolchain, which is the later roadmap item (FreeRTOS or Zephyr M33 firmware doing sensor sampling). The point of
+  this stretch goal was to prove the two-core link works, which the saved dmesg does.
+- **Tradeoffs and unknowns:** the ELF is for the EVK, not the FRDM; it ran, but I did not verify why it is compatible, nor
+  read the M33 UART output. Ping-pong here has no latency measurement; the timestamps in dmesg (about 0.2 s for 51
+  messages including setup) are not a benchmark.
+- **Kernel noise seen:** `ethosu: can't change firmware or remote processor is running` appears whenever the Ethos-U
+  driver is used while the core is up; it was already present in the earlier benchmark logs and is harmless.

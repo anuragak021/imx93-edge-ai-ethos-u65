@@ -1,0 +1,7 @@
+uname=6.6.36-lts-next-g34fd186d1571
+before: firmware=ethosu_firmware state=running
+-rw-r--r-- 1 root root 60624 Mar  9  2018 /lib/firmware/imx93-11x11-evk_m33_TCM_rpmsg_lite_pingpong_rtos_linux_remote.elf
+demo firmware sha256=8d253f5d901ffe507ed01c7caa54917d10a1224a2bd24e117425c9e9b0f0b946
+demo started: firmware=imx93-11x11-evk_m33_TCM_rpmsg_lite_pingpong_rtos_linux_remote.elf state=running
+new dmesg lines: 65
+restored: firmware=ethosu_firmware state=running

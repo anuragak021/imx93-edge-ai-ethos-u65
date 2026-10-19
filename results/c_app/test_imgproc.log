@@ -1,0 +1,6 @@
+  320x240: max |C - Pillow| over 1491 samples = 0
+  500x333: max |C - Pillow| over 1491 samples = 1
+  256x256: max |C - Pillow| over 1491 samples = 0
+  1024x768: max |C - Pillow| over 1491 samples = 0
+  240x320: max |C - Pillow| over 1491 samples = 0
+test_imgproc: PASS

@@ -1,10 +1,41 @@
 Internal ctest changing into directory: /root/imx93/stretch_c_app/build
+UpdateCTestConfiguration  from :/root/imx93/stretch_c_app/build/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/root/imx93/stretch_c_app/build/DartConfiguration.tcl
 Test project /root/imx93/stretch_c_app/build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
     Start 1: test_imgproc
+
+1: Test command: /root/imx93/stretch_c_app/build/test_imgproc
+1: Working Directory: /root/imx93/stretch_c_app/build
+1: Test timeout computed to be: 10000000
+1:   320x240: max |C - Pillow| over 1491 samples = 0
+1:   500x333: max |C - Pillow| over 1491 samples = 1
+1:   256x256: max |C - Pillow| over 1491 samples = 0
+1:   1024x768: max |C - Pillow| over 1491 samples = 0
+1:   240x320: max |C - Pillow| over 1491 samples = 0
+1: test_imgproc: PASS
 1/3 Test #1: test_imgproc .....................   Passed    0.15 sec
+test 2
     Start 2: test_quant
+
+2: Test command: /root/imx93/stretch_c_app/build/test_quant
+2: Working Directory: /root/imx93/stretch_c_app/build
+2: Test timeout computed to be: 10000000
+2: test_quant: PASS
 2/3 Test #2: test_quant .......................   Passed    0.00 sec
+test 3
     Start 3: test_labels
+
+3: Test command: /root/imx93/stretch_c_app/build/test_labels
+3: Working Directory: /root/imx93/stretch_c_app/build
+3: Test timeout computed to be: 10000000
+3: test_labels: PASS
 3/3 Test #3: test_labels ......................   Passed    0.00 sec
 
 100% tests passed, 0 tests failed out of 3

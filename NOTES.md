@@ -145,11 +145,15 @@ Plain-language log of what was done, why, and the tradeoffs.
     (about 12 MB for the resize pass) and make `img_preprocess` non-reentrant; documented in imgproc.h.
   - `getopt_long`, `opendir`, `clock_gettime` need `_POSIX_C_SOURCE`; clang-tidy flags the macro as a reserved
     identifier (`bugprone-reserved-identifier`). It is the documented feature-test macro, so accepted.
+  - The final-source analysis output is saved in `results/static_analysis.txt` (`stretch_c_app/run_static_analysis.sh`):
+    cppcheck exit code 0; clang-tidy reports 4 `memcpy`, 2 `memset`, 2 `snprintf` notes and the macro warning.
   - clang-tidy's `clang-analyzer-security.insecureAPI.*` warns about `memcpy`, `memset`, `snprintf` (they lack the
     optional C11 Annex K `_s` variants, which glibc does not provide). Every call has an explicit, checked length;
     accepted. The one real finding, an unbounded `strcpy`, was replaced by a length-checked `memcpy`.
   - MISRA C:2012 was not checked with a tool (none available here); only the compiler warnings, cppcheck and
-    clang-tidy were run. `main.c` ignores no return values except deliberate `(void)` casts on printf-style calls.
+    clang-tidy were run. Discarded return values: printf-style calls, `fclose` of a file opened read-only
+    (after its content and `ferror` were already checked), and `closedir`. `clock_gettime` is checked: a failing clock
+    aborts the run instead of corrupting latencies.
 - **Failure policy:** any per-image failure (decode, size limit, inference) aborts the run with a non-zero exit instead of
   skipping, so a partial result cannot look complete.
 - **Bugs found while testing, kept as lessons:** my first quantization tests asserted exact rounding ties that float32

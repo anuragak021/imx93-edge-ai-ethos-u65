@@ -75,11 +75,16 @@ static void usage(const char *prog)
                   prog);
 }
 
-static int64_t now_ns(void)
+/* Monotonic time in nanoseconds; a failing clock must not silently corrupt latency numbers. */
+static app_status_t now_ns(int64_t *ns)
 {
     struct timespec ts;
-    (void)clock_gettime(CLOCK_MONOTONIC, &ts);
-    return (int64_t)ts.tv_sec * NS_PER_S + (int64_t)ts.tv_nsec;
+    if (clock_gettime(CLOCK_MONOTONIC, &ts) != 0)
+    {
+        return APP_ERR_IO;
+    }
+    *ns = (int64_t)ts.tv_sec * NS_PER_S + (int64_t)ts.tv_nsec;
+    return APP_OK;
 }
 
 static app_status_t parse_args(int argc, char **argv, cli_args_t *args)
@@ -344,9 +349,19 @@ static app_status_t run_inference(const engine_t *eng, int8_t *scores, double *m
     {
         return APP_ERR_TFLITE;
     }
-    const int64_t t0 = now_ns();
+    int64_t t0 = 0;
+    int64_t t1 = 0;
+    app_status_t clock_st = now_ns(&t0);
     const TfLiteStatus st = TfLiteInterpreterInvoke(eng->interp);
-    *ms = (double)(now_ns() - t0) / NS_PER_MS;
+    if (clock_st == APP_OK)
+    {
+        clock_st = now_ns(&t1);
+    }
+    if (clock_st != APP_OK)
+    {
+        return clock_st;
+    }
+    *ms = (double)(t1 - t0) / NS_PER_MS;
     if (st != kTfLiteOk)
     {
         return APP_ERR_TFLITE;

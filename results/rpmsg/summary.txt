@@ -5,3 +5,4 @@ demo firmware sha256=8d253f5d901ffe507ed01c7caa54917d10a1224a2bd24e117425c9e9b0f
 demo started: firmware=imx93-11x11-evk_m33_TCM_rpmsg_lite_pingpong_rtos_linux_remote.elf state=running
 new dmesg lines: 65
 restored: firmware=ethosu_firmware state=running
+npu_after_restore exit code: 0

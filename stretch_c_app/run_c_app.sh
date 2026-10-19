@@ -12,13 +12,17 @@ BIN="stretch_c_app/build/imx93_infer"
 mkdir -p "$OUT"
 cmake -S stretch_c_app -B stretch_c_app/build -DCMAKE_BUILD_TYPE=Release > "$OUT/cmake_configure.log" 2>&1
 cmake --build stretch_c_app/build > "$OUT/cmake_build.log" 2>&1
-ctest --test-dir stretch_c_app/build --output-on-failure > "$OUT/ctest.log" 2>&1
+ctest --test-dir stretch_c_app/build -V > "$OUT/ctest.log" 2>&1
+# Run the resize-vs-Pillow test directly too, so its per-case max differences are saved on this target.
+stretch_c_app/build/test_imgproc > "$OUT/test_imgproc.log" 2>&1
 DELEGATE="$(find /usr -name 'libethosu_delegate.so' 2>/dev/null | head -n 1)"
 [ -n "$DELEGATE" ] || { echo "libethosu_delegate.so not found" >&2; exit 1; }
 
 {
   echo "binary_sha256=$(sha256sum "$BIN" | cut -d' ' -f1)"
   echo "gcc=$(gcc --version | head -n 1)"
+  echo "sha256_cpu_model=$(sha256sum "$MODEL_CPU" | cut -d' ' -f1)"
+  echo "sha256_npu_model=$(sha256sum "$MODEL_NPU" | cut -d' ' -f1)"
   echo "delegate=$DELEGATE"
   echo "commands:"
 } > "$OUT/env.txt"

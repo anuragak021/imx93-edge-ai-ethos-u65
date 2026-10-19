@@ -89,7 +89,7 @@ def main() -> int:
         "",
         "## Build",
         "",
-        *[f"- {l}" for l in env.splitlines() if l.startswith(("binary_sha256", "gcc"))],
+        *[f"- {l}" for l in env.splitlines() if l.startswith(("binary_sha256", "gcc", "sha256_"))],
     ]
     (RESULTS / "c_app_results.md").write_text("\n".join(md) + "\n")
     print("\n".join(md))

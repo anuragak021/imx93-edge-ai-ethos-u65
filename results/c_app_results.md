@@ -5,11 +5,11 @@ Fewer samples than the 200-run loop in results.md, so treat the medians as indic
 
 | Config | Median (ms) | Min (ms) | Max (ms) | Warm-up inference (ms) | images | top-1 vs ground truth |
 |---|---|---|---|---|---|---|
-| NPU | 3.52 | 3.51 | 3.56 | 3.56 | 50 | 0.72 |
-| CPU 1 thread (no XNNPACK) | 67.83 | 67.68 | 68.55 | 82.46 | 50 | 0.72 |
-| CPU 2 threads (no XNNPACK) | 49.05 | 48.79 | 50.00 | 55.28 | 50 | 0.72 |
-| CPU 1 thread, XNNPACK | 40.90 | 40.36 | 41.32 | 54.01 | 50 | 0.72 |
-| CPU 2 threads, XNNPACK | 22.64 | 22.40 | 23.09 | 28.63 | 50 | 0.72 |
+| NPU | 3.54 | 3.54 | 3.56 | 3.59 | 50 | 0.72 |
+| CPU 1 thread (no XNNPACK) | 67.91 | 67.78 | 68.83 | 74.14 | 50 | 0.72 |
+| CPU 2 threads (no XNNPACK) | 49.10 | 48.89 | 53.53 | 55.15 | 50 | 0.72 |
+| CPU 1 thread, XNNPACK | 40.37 | 40.07 | 40.87 | 46.53 | 50 | 0.72 |
+| CPU 2 threads, XNNPACK | 22.77 | 22.47 | 23.75 | 28.84 | 50 | 0.72 |
 
 ## C app vs Python app (same model, same images)
 
@@ -18,5 +18,7 @@ Fewer samples than the 200-run loop in results.md, so treat the medians as indic
 
 ## Build
 
-- binary_sha256=5020410a25c1165779f6ff8900740ed2d95f32d34abdcef5a73d946b158f1520
+- binary_sha256=047acbeb18ebc3f4d95caaecf0c7f266242e91346f1ceb01cf4d43314d516677
 - gcc=gcc (GCC) 13.3.0
+- sha256_cpu_model=7d2db8637b97aca727ddb80f45f60874d8cfe6753b2be5d5b09b6bdb31f6b81e
+- sha256_npu_model=f9ba35b3a435d0e1cb14ce8d1daddc4f54294af88ee37795eb07b3188324cf50

@@ -92,26 +92,30 @@ No credentials are stored in this repo.
 Ethos-U delegate through `TfLiteExternalDelegateCreate`. Pure logic (Pillow-compatible resize and crop, quantization,
 top-k, label parsing) is separate from the TFLite glue and has host unit tests (`ctest`, 3 suites). Everything builds with
 `-Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wdouble-promotion -Werror`; cppcheck is clean; clang-tidy findings
-are listed in NOTES.md section 8. The resize is checked against Pillow output: identical on four synthetic images and
-off by at most 1 on the fifth (`stretch_c_app/tests/test_imgproc.c`).
+are listed in NOTES.md section 8 (`results/static_analysis.txt`). The resize is checked against Pillow output by
+`stretch_c_app/tests/test_imgproc.c`; on the board (`results/c_app/test_imgproc.log`) it is identical on four synthetic
+images and off by at most 1 on the fifth.
 
 Measured on the board (`results/c_app_results.md`, generated from `results/c_app/*.log`; median per-image `invoke()` over
 50 images, so fewer samples than the table above):
 
 | Config | Median (ms) | top-1 vs ground truth |
 |---|---|---|
-| NPU | 3.52 | 0.72 |
-| CPU 1 thread, XNNPACK | 40.90 | 0.72 |
-| CPU 2 threads, XNNPACK | 22.64 | 0.72 |
-| CPU 1 thread, no XNNPACK | 67.83 | 0.72 |
-| CPU 2 threads, no XNNPACK | 49.05 | 0.72 |
+| NPU | 3.54 | 0.72 |
+| CPU 1 thread, XNNPACK | 40.37 | 0.72 |
+| CPU 2 threads, XNNPACK | 22.77 | 0.72 |
+| CPU 1 thread, no XNNPACK | 67.91 | 0.72 |
+| CPU 2 threads, no XNNPACK | 49.10 | 0.72 |
 
-- The C CPU path does not use XNNPACK by default (its 1-thread latency equals the XNNPACK-off figure); the `--xnnpack`
-  flag adds the delegate explicitly. Compare the NPU against the XNNPACK rows.
+- The C CPU path does not use XNNPACK by default: `results/c_app/c_cpu_1t.err` is empty, while the `--xnnpack` runs
+  log `Created TensorFlow Lite XNNPACK delegate for CPU.` (`c_cpu_1t_xnnpack.err`). The flag adds the delegate
+  explicitly. Compare the NPU against the XNNPACK rows.
 - The C and Python apps are **not** bit-identical: top-1 matches on 48 of 50 images on the NPU and 47 of 50 on the CPU
   with XNNPACK. The C app decodes JPEGs with stb_image and the Python app with Pillow (libjpeg), and the two decoders
   produce slightly different pixels. That is the likely cause but I did not isolate it. One of the differing images
-  (`n02102040_5802.JPEG`) changes class entirely (skunk vs Tibetan mastiff), so the models are sensitive on it.
+  (`n02102040_5802.JPEG`) changes class entirely (skunk vs Tibetan mastiff), so the models are sensitive on it. I checked
+  with Pillow that it, `n03425413_13821.JPEG` and `n02979186_40.JPEG` are ordinary baseline RGB JPEGs (no CMYK or
+  progressive encoding), which rules out those two color-handling causes only.
 - Build and run on the board (it has gcc and cmake): `tools/fetch_c_deps.py` downloads the TF 2.16.2 C headers and
   stb_image.h (pinned, hash-checked; the board has no headers), then `sh stretch_c_app/run_c_app.sh results_c` builds,
   runs the unit tests and every configuration. The exact commands are in `results/c_app/env.txt`.
@@ -124,8 +128,8 @@ Measured on the board (`results/c_app_results.md`, generated from `results/c_app
 
 - dmesg shows the M33 booting the demo firmware, the channel `rpmsg-openamp-demo-channel` appearing, and Linux receiving
   51 messages, the odd numbers 1 to 101 in order, followed by the demo's own "goodbye!".
-- After the script, `remoteproc0` was back on `ethosu_firmware`, `running`, and `infer.py --device npu` ran again at 3.65 ms
-  (checked by hand; that run is not saved as a log).
+- After the script, `remoteproc0` was back on `ethosu_firmware`, `running` (`results/rpmsg/summary.txt`), and the script's
+  `infer.py --device npu` run completed with exit code 0 at about 3.6 ms per image (`results/rpmsg/npu_after_restore.log`).
 
 What this does and does not show: the A55 and M33 can exchange RPMsg messages on this FRDM board. The M33 code is **NXP's
 prebuilt demo, not code I wrote**, and it was built for the 11x11 EVK, not the FRDM. It worked, presumably because RPMsg

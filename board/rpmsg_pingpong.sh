@@ -18,6 +18,11 @@ restore() {
   echo start > "$RP/state"
   sleep 2
   echo "restored: firmware=$(cat "$RP/firmware") state=$(cat "$RP/state")" >> "$OUT/summary.txt"
+  # Prove the NPU works again after the restore (needs infer.py, samples/ and the Vela model in cwd).
+  delegate="$(find /usr -name libethosu_delegate.so 2>/dev/null | head -n 1)"
+  python3 infer.py --device npu --model vela_out/mobilenet_v2_int8_vela.tflite --images samples \
+    --delegate "$delegate" > "$OUT/npu_after_restore.log" 2>&1
+  echo "npu_after_restore exit code: $?" >> "$OUT/summary.txt"
 }
 trap restore EXIT
 

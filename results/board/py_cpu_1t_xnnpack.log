@@ -1,0 +1,2 @@
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+device=cpu threads=1 no_xnnpack=False runs=200 first_ms=46.774 median_ms=40.772 mean_ms=40.804 p95_ms=41.036 min_ms=40.426 max_ms=45.193

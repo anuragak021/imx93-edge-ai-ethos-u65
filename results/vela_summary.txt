@@ -1,0 +1,44 @@
+
+Network summary for mobilenet_v2_int8
+Accelerator configuration               Ethos_U65_256
+System configuration                 internal-default
+Memory mode                          internal-default
+Accelerator clock                                1000 MHz
+Design peak SRAM bandwidth                      14.90 GB/s
+Design peak DRAM bandwidth                       3.49 GB/s
+
+Total SRAM used                                375.23 KiB
+Total DRAM used                               3876.86 KiB
+
+CPU operators = 0 (0.0%)
+NPU operators = 96 (100.0%)
+
+Average SRAM bandwidth                           5.58 GB/s
+Input   SRAM bandwidth                          10.56 MB/batch
+Weight  SRAM bandwidth                           6.67 MB/batch
+Output  SRAM bandwidth                           6.27 MB/batch
+Total   SRAM bandwidth                          23.67 MB/batch
+Total   SRAM bandwidth            per input     23.67 MB/inference (batch size 1)
+
+Average DRAM bandwidth                           1.12 GB/s
+Input   DRAM bandwidth                           1.12 MB/batch
+Weight  DRAM bandwidth                           3.24 MB/batch
+Output  DRAM bandwidth                           0.40 MB/batch
+Total   DRAM bandwidth                           4.76 MB/batch
+Total   DRAM bandwidth            per input      4.76 MB/inference (batch size 1)
+
+Neural network macs                         304451664 MACs/batch
+Network Tops/s                                   0.14 Tops/s
+
+NPU cycles                                    3486400 cycles/batch
+SRAM Access cycles                            1103274 cycles/batch
+DRAM Access cycles                            1577980 cycles/batch
+On-chip Flash Access cycles                         0 cycles/batch
+Off-chip Flash Access cycles                        0 cycles/batch
+Total cycles                                  4243380 cycles/batch
+
+Batch Inference time                 4.24 ms,  235.66 inferences/s (batch size 1)
+
+total 3528
+-rw-r--r-- 1 root root    1672 Sep  9 18:35 mobilenet_v2_int8_summary_internal-default.csv
+-rw-r--r-- 1 root root 3607424 Sep  9 18:35 mobilenet_v2_int8_vela.tflite

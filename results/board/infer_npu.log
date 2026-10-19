@@ -1,0 +1,62 @@
+INFO: Ethosu delegate: device_name set to /dev/ethosu0.
+INFO: Ethosu delegate: cache_file_path set to .
+INFO: Ethosu delegate: timeout set to 60000000000.
+INFO: Ethosu delegate: enable_cycle_counter set to 0.
+INFO: Ethosu delegate: enable_profiling set to 0.
+INFO: Ethosu delegate: profiling_buffer_size set to 2048.
+INFO: Ethosu delegate: pmu_event0 set to 0.
+INFO: Ethosu delegate: pmu_event1 set to 0.
+INFO: Ethosu delegate: pmu_event2 set to 0.
+INFO: Ethosu delegate: pmu_event3 set to 0.
+INFO: EthosuDelegate: 1 nodes delegated out of 1 nodes with 1 partitions.
+# warmup_ms=3.619 device=npu
+ILSVRC2012_val_00017370.JPEG	3.585 ms	top1=English springer	top5=English springer(66), Border collie(-117), Brittany spaniel(-121), Saint Bernard(-122), American Staffordshire terrier(-125)
+ILSVRC2012_val_00022792.JPEG	3.583 ms	top1=golf ball	top5=golf ball(106), baseball(-127), ping-pong ball(-127), toilet tissue(-128), porcupine(-128)
+ILSVRC2012_val_00023242.JPEG	3.570 ms	top1=Brittany spaniel	top5=Brittany spaniel(22), Welsh springer spaniel(-91), English springer(-94), English setter(-115), Appenzeller(-125)
+n01440764_10040.JPEG	3.582 ms	top1=tench	top5=tench(84), axolotl(-127), sturgeon(-127), common newt(-127), rock beauty(-127)
+n01440764_10531.JPEG	3.576 ms	top1=tench	top5=tench(118), sea urchin(-128), hog(-128), zebra(-128), sorrel(-128)
+n01440764_3712.JPEG	3.580 ms	top1=tench	top5=tench(110), barracouta(-126), cockroach(-128), sea urchin(-128), zebra(-128)
+n01440764_5911.JPEG	3.587 ms	top1=barracouta	top5=barracouta(23), tench(-87), gar(-87), coho(-127), sturgeon(-127)
+n01440764_8610.JPEG	3.576 ms	top1=tench	top5=tench(123), platypus(-127), sea cucumber(-128), hog(-128), zebra(-128)
+n02102040_4960.JPEG	3.578 ms	top1=English springer	top5=English springer(-62), bluetick(-98), Border collie(-116), cocker spaniel(-121), sleeping bag(-122)
+n02102040_5802.JPEG	3.571 ms	top1=Tibetan mastiff	top5=Tibetan mastiff(-81), skunk(-88), Bernese mountain dog(-110), English springer(-111), Greater Swiss Mountain dog(-116)
+n02102040_6892.JPEG	3.576 ms	top1=Brittany spaniel	top5=Brittany spaniel(47), English springer(-67), German short-haired pointer(-122), English setter(-124), Welsh springer spaniel(-126)
+n02979186_13281.JPEG	3.575 ms	top1=cassette player	top5=cassette player(23), tape player(-38), mousetrap(-127), cassette(-127), toaster(-127)
+n02979186_19190.JPEG	3.576 ms	top1=cassette player	top5=cassette player(92), hand-held computer(-125), loudspeaker(-125), stopwatch(-125), tape player(-126)
+n02979186_24941.JPEG	3.572 ms	top1=tape player	top5=tape player(66), cassette player(-88), cassette(-116), photocopier(-127), guinea pig(-128)
+n02979186_40.JPEG	3.583 ms	top1=tape player	top5=tape player(-41), cassette player(-41), CD player(-77), radio(-117), cassette(-125)
+n02979186_4780.JPEG	3.571 ms	top1=cassette player	top5=cassette player(7), tape player(-100), radio(-104), microphone(-120), assault rifle(-125)
+n03000684_10302.JPEG	3.576 ms	top1=chain saw	top5=chain saw(113), thresher(-126), lawn mower(-127), carpenter's kit(-127), binder(-127)
+n03000684_13560.JPEG	3.572 ms	top1=chain saw	top5=chain saw(-78), lumbermill(-89), cannon(-95), tank(-105), iron(-107)
+n03000684_16291.JPEG	3.576 ms	top1=chain saw	top5=chain saw(122), lawn mower(-127), toilet tissue(-128), porcupine(-128), sea cucumber(-128)
+n03000684_17140.JPEG	3.577 ms	top1=chain saw	top5=chain saw(18), lawn mower(-95), go-kart(-119), tricycle(-122), stretcher(-123)
+n03000684_6460.JPEG	3.573 ms	top1=chain saw	top5=chain saw(122), gasmask(-127), fox squirrel(-128), sea cucumber(-128), wood rabbit(-128)
+n03028079_1.JPEG	3.579 ms	top1=church	top5=church(82), bell cote(-106), beacon(-124), monastery(-125), barn(-125)
+n03028079_14382.JPEG	3.579 ms	top1=church	top5=church(106), bell cote(-126), beacon(-127), book jacket(-127), castle(-127)
+n03028079_2660.JPEG	3.584 ms	top1=monastery	top5=monastery(-50), palace(-77), church(-105), bell cote(-114), mosque(-119)
+n03028079_6860.JPEG	3.577 ms	top1=church	top5=church(68), bell cote(-116), altar(-118), monastery(-123), vault(-126)
+n03028079_79790.JPEG	3.575 ms	top1=bell cote	top5=bell cote(10), beacon(-84), church(-99), monastery(-123), dome(-126)
+n03394916_19491.JPEG	3.579 ms	top1=French horn	top5=French horn(94), cornet(-127), muzzle(-127), trombone(-127), sea cucumber(-128)
+n03394916_30222.JPEG	3.574 ms	top1=bassoon	top5=bassoon(-11), oboe(-53), French horn(-96), cornet(-117), steel drum(-122)
+n03394916_34051.JPEG	3.580 ms	top1=cornet	top5=cornet(64), French horn(-88), trombone(-126), toilet tissue(-128), porcupine(-128)
+n03394916_41871.JPEG	3.578 ms	top1=French horn	top5=French horn(23), hand blower(-116), ballplayer(-123), pajama(-125), brassiere(-126)
+n03394916_56022.JPEG	3.574 ms	top1=French horn	top5=French horn(112), cornet(-126), hair slide(-127), trombone(-127), wood rabbit(-128)
+n03417042_10520.JPEG	3.570 ms	top1=moving van	top5=moving van(-35), garbage truck(-73), trailer truck(-95), bubble(-125), crane(-125)
+n03417042_20962.JPEG	3.575 ms	top1=garbage truck	top5=garbage truck(25), trailer truck(-37), tow truck(-126), forklift(-127), moving van(-127)
+n03417042_27151.JPEG	3.585 ms	top1=garbage truck	top5=garbage truck(71), trailer truck(-106), tow truck(-118), snowplow(-124), crane(-125)
+n03417042_5090.JPEG	3.569 ms	top1=trailer truck	top5=trailer truck(-21), garbage truck(-87), moving van(-119), snowplow(-121), liner(-123)
+n03417042_6081.JPEG	3.573 ms	top1=garbage truck	top5=garbage truck(36), trailer truck(-71), thresher(-120), tow truck(-123), forklift(-126)
+n03425413_13821.JPEG	3.573 ms	top1=safe	top5=safe(-87), gas pump(-94), pay-phone(-112), beaker(-120), photocopier(-123)
+n03425413_16421.JPEG	3.579 ms	top1=street sign	top5=street sign(-18), gas pump(-68), tobacco shop(-117), crate(-123), cassette(-125)
+n03425413_18562.JPEG	3.582 ms	top1=gas pump	top5=gas pump(127), toilet tissue(-128), starfish(-128), zebra(-128), sorrel(-128)
+n03425413_21911.JPEG	3.586 ms	top1=gas pump	top5=gas pump(16), ashcan(-95), rain barrel(-119), apiary(-120), refrigerator(-122)
+n03425413_4750.JPEG	3.573 ms	top1=gas pump	top5=gas pump(85), mailbox(-123), thresher(-125), barrow(-126), plow(-127)
+n03445777_13311.JPEG	3.573 ms	top1=golf ball	top5=golf ball(95), baseball(-124), toilet tissue(-128), starfish(-128), sorrel(-128)
+n03445777_2070.JPEG	3.571 ms	top1=golf ball	top5=golf ball(121), toilet tissue(-128), starfish(-128), zebra(-128), sorrel(-128)
+n03445777_3981.JPEG	3.578 ms	top1=golf ball	top5=golf ball(80), baseball(-124), toilet tissue(-128), starfish(-128), sorrel(-128)
+n03445777_5790.JPEG	3.573 ms	top1=golf ball	top5=golf ball(117), baseball(-124), pill bottle(-126), ping-pong ball(-127), thimble(-127)
+n03888257_10380.JPEG	3.582 ms	top1=nematode	top5=nematode(-88), night snake(-102), parachute(-113), steel arch bridge(-117), Indian cobra(-122)
+n03888257_21912.JPEG	3.574 ms	top1=parachute	top5=parachute(56), airship(-96), sandbar(-112), seashore(-125), balloon(-126)
+n03888257_30382.JPEG	3.571 ms	top1=parachute	top5=parachute(72), balloon(-105), jellyfish(-121), wild boar(-128), zebra(-128)
+n03888257_400.JPEG	3.570 ms	top1=parachute	top5=parachute(79), balloon(-95), flagpole(-127), mountain tent(-127), cliff(-127)
+n03888257_69371.JPEG	3.570 ms	top1=parachute	top5=parachute(117), harp(-127), wild boar(-128), zebra(-128), sorrel(-128)

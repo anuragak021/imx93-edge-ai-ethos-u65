@@ -1,0 +1,1 @@
+device=cpu threads=1 no_xnnpack=True runs=200 first_ms=74.616 median_ms=68.008 mean_ms=68.017 p95_ms=68.142 min_ms=67.833 max_ms=69.053

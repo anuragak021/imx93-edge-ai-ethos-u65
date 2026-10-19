@@ -62,3 +62,45 @@ Plain-language log of what was done, why, and the tradeoffs.
   the NPU benchmark actually running (see results).
 - **Network:** both Ethernet ports had no carrier at probe time (no cable), so SSH is blocked until a cable is
   plugged in.
+
+## 4. Networking (Wi-Fi) bring-up
+
+- The board's SDIO Wi-Fi card (`mmc2`) was detected but had no interface because the NXP driver was not loaded.
+  `modprobe moal mod_para=nxp/wifi_mod_para.conf` created `mlan0`, `uap0`, `wfd0`.
+- connman manages the network. A file in `/var/lib/connman/*.config` (`Type=wifi`, `Name`, `Passphrase`) is the
+  non-interactive way to join; `connmanctl connect` without an agent hangs the console waiting for a passphrase.
+- connman brought the link up on `wfd0` (192.168.1.16), not `mlan0`. Both are the same radio; SSH works either way.
+- **Why not Ethernet:** no cable was available; Wi-Fi was already supported by the hardware.
+- Not done: making the module load persistent across reboots, and a reboot test. The passphrase stays out of the repo.
+- Board RTC is wrong (file dates show Sep 9), so board timestamps in logs are not meaningful.
+
+## 5. Vela (`results/vela_summary.txt`)
+
+- **What Vela does:** takes the int8 TFLite flatbuffer and rewrites supported operators into one custom
+  `ethos-u` operator holding a command stream for the NPU, plus re-laid-out weights. Unsupported operators stay
+  as normal TFLite ops that run on the CPU. It also schedules tensors in memory and estimates cycles.
+- **Version match:** run on the board so the Vela version (3.12.0) is the one shipped with the board's NPU
+  driver stack; the command stream format must match the driver/firmware.
+- **Config choice:** `--accelerator-config ethos-u65-256` (the i.MX 93 NPU has 256 MACs), default system config
+  and memory mode as in NXP's guide. The i.MX 93 has no dedicated NPU SRAM, so the "internal-default" memory
+  mode is what Vela reports (375 KiB SRAM scratch, 3877 KiB DRAM). Different system configs change Vela's
+  estimate and scheduling, not correctness; not explored.
+- **Why some ops can fall back to the CPU:** the NPU supports a fixed set of int8 ops with shape/stride/
+  padding limits. Anything float, unsupported, or beyond a limit is left to the CPU, and each CPU/NPU switch
+  costs a delegate partition. For this model Vela reports 0 CPU operators, so there was no fallback to analyze;
+  the conclusion applies to MobileNetV2 only.
+
+## 6. Benchmarking decisions
+
+- **Two measurement paths:** TFLite `benchmark_model` (the standard tool) and `board/bench.py` (records every run).
+  `benchmark_model` gives no median, so reporting its average as a median would be wrong; the median comes from
+  the saved CSVs. They agree within about 1 percent on every config, which is a cross-check on both.
+- **CPU baseline:** `benchmark_model` and tflite_runtime apply XNNPACK implicitly, so the "obvious" CPU number is
+  XNNPACK. I report XNNPACK on as the baseline and XNNPACK off for reference, because a quoted speedup against
+  the slower reference kernels would overstate the NPU's advantage (19.5x vs 11.7x at one thread).
+- **Warm-up:** first inference is separated from steady state; 10 extra warm-up runs are discarded.
+- **Random input for latency:** inference time does not depend on values; accuracy is checked separately.
+- **Agreement check:** 49 of 50 top-1 labels match between CPU and NPU; the one mismatch is a near-tie, see README.
+- **Not measured:** power, temperature, CPU clock (no cpufreq sysfs), run-to-run variance across separate boots.
+- **Shared preprocessing:** `infer.py` copies `quantize.py`'s load/resize/crop code. Duplicated on purpose so
+  the board has no dependency on TensorFlow; a divergence would hurt accuracy silently, so they are kept identical.

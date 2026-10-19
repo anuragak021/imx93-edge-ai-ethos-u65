@@ -7,6 +7,7 @@ Writes:
   model/sample_list.txt            held-out images for the board app / sanity check
   results/quantize_log.txt         accuracy of float vs int8 on the held-out set
 """
+
 from __future__ import annotations
 
 import argparse

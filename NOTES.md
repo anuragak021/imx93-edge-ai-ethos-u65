@@ -46,3 +46,19 @@ Plain-language log of what was done, why, and the tradeoffs.
   so the float vs int8 accuracy gap is indicative, not statistically solid.
 - **Lesson:** the first dataset download died silently (backgrounded curl, hidden errors), leaving a
   truncated file; a naive resume then appended wrong data. Always verify size/checksum after a download.
+
+## 3. Board access and probe (`results/board_probe.txt`)
+
+- **Serial:** on WSL2 the FRDM debug USB is a WCH CH342 (1a86:55d2). It shows up as `/dev/ttyACM1` and
+  `/dev/ttyACM2` (cdc_acm driver, not ttyUSB). `ttyACM1` is the A55 Linux console; the other stayed silent
+  (presumably the M33 console). `ttyACM0` was the Nucleo's ST-Link VCP and is not touched by this project.
+  Login is `root`, no password.
+- **BSP:** NXP i.MX Release Distro 6.6-scarthgap, kernel 6.6.36-lts-next, aarch64, Python 3.12.4.
+- **Found on the board:** `vela` 3.12.0 (`/usr/bin/vela`), delegate `/usr/lib/libethosu_delegate.so`,
+  `benchmark_model` at `/usr/bin/tensorflow-lite-2.16.2/examples/benchmark_model`, `tflite_runtime` 2.16.2,
+  device node `/dev/ethosu0`. So Vela runs on the board and matches its NPU stack; no pip pin needed on the laptop.
+- **Converter vs runtime:** laptop TF 2.15.1 is older than the board runtime 2.16.2, which is the safe direction.
+- **remoteproc0 (M33) is `offline`:** noted, not assumed relevant. Whether the NPU needs it is settled only by
+  the NPU benchmark actually running (see results).
+- **Network:** both Ethernet ports had no carrier at probe time (no cable), so SSH is blocked until a cable is
+  plugged in.

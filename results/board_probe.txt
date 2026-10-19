@@ -1,0 +1,47 @@
+BEGIN_PROBE
+ID=fsl-imx-xwayland
+NAME="NXP i.MX Release Distro"
+VERSION="6.6-scarthgap (scarthgap)"
+VERSION_ID=6.6-scarthgap
+VERSION_CODENAME="scarthgap"
+PRETTY_NAME="NXP i.MX Release Distro 6.6-scarthgap (scarthgap)"
+CPE_NAME="cpe:/o:openembedded:fsl-imx-xwayland:6.6-scarthgap"
+Linux imx93frdm 6.6.36-lts-next-g34fd186d1571 #1 SMP PREEMPT Wed Sep  4 08:22:45 UTC 2024 aarch64 GNU/Linux
+--vela
+/usr/bin/vela
+3.12.0
+--ethosu files
+/var/lib/dpkg/info/ethos-u-driver-stack.postinst
+/var/lib/dpkg/info/ethos-u-firmware.md5sums
+/var/lib/dpkg/info/ethos-u-vela.list
+/var/lib/dpkg/info/ethos-u-driver-stack.list
+/var/lib/dpkg/info/tensorflow-lite-ethosu-delegate.postinst
+/var/lib/dpkg/info/ethos-u-driver-stack.md5sums
+/var/lib/dpkg/info/ethos-u-vela.md5sums
+/var/lib/dpkg/info/tensorflow-lite-ethosu-delegate.md5sums
+/var/lib/dpkg/info/tensorflow-lite-ethosu-delegate.list
+/var/lib/dpkg/info/ethos-u-firmware.list
+/usr/bin/ethosu_logd
+/usr/bin/ethosu
+/usr/lib/firmware/ethosu_firmware
+/usr/lib/libethosu.so.1.0.0
+/usr/lib/python3.12/site-packages/ethosu-0.1.0.dist-info
+/usr/lib/python3.12/site-packages/ethosu
+/usr/lib/libethosu_delegate.so
+--benchmark_model
+/usr/bin/tensorflow-lite-2.16.2/examples/benchmark_model
+--tflite_runtime
+2.16.2 /usr/lib/python3.12/site-packages/tflite_runtime/__init__.py
+Python 3.12.4
+--dev
+/dev/ethosu0
+--dmesg
+[    0.000000] OF: reserved mem: initialized node ethosu_region@A8000000, compatible id shared-dma-pool
+[    0.000000] OF: reserved mem: 0x00000000a8000000..0x00000000afffffff (131072 KiB) map reusable ethosu_region@A8000000
+[    1.360701] ethosu ethosu: assigned reserved memory node ethosu_region@A8000000
+--remoteproc
+/sys/class/remoteproc/remoteproc0 imx-rproc offline
+--eth
+eth0 0
+eth1 0
+END_PROBE

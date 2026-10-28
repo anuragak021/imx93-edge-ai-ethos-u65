@@ -6,3 +6,5 @@ model/calib/
 model/val/
 stretch_c_app/third_party/
 build/
+demo_images/
+/*.mp4

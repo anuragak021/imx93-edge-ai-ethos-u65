@@ -15,6 +15,10 @@ single run the median `invoke()` latency was 22.67 ms on the CPU and 3.58 ms on 
 the top-1 label for 19 of 20 images. That is one live run for the video; the 200-run benchmark is in the table below.
 Start the demo with `python3 tools/webdemo/server.py <board-ip>` and open `http://localhost:8093`.
 
+<p align="center"><img src="docs/board.jpg" alt="The FRDM i.MX 93 board used for this project, with the debug and power USB-C cables connected" width="420"></p>
+
+*The FRDM i.MX 93 board used for all measurements (debug and power USB-C cables connected).*
+
 ## Board and software (`results/board_probe.txt`, `results/board/env.txt`)
 
 - FRDM i.MX 93, NXP prebuilt Linux BSP: NXP i.MX Release Distro 6.6-scarthgap, kernel 6.6.36-lts-next, aarch64

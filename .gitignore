@@ -8,3 +8,4 @@ stretch_c_app/third_party/
 build/
 demo_images/
 /*.mp4
+/photo_*.jpg
